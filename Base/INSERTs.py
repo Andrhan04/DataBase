@@ -16,3 +16,8 @@ def InsertAuthor(FIO):
     connectBD.conn.commit()
     cursor.close()
 
+def InsertBook(FIO):
+    cursor = connectBD.conn.cursor()
+    cursor.execute('INSERT INTO "Author" () VALUES (%s)',(FIO,))
+    connectBD.conn.commit()
+    cursor.close()
