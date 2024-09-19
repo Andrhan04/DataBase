@@ -7,7 +7,7 @@ from Base import connectBD
 def GetAllBook():
     #Вывод в консоль все книги
     cursor = connectBD.conn.cursor()
-    cursor.execute('SELECT * FROM "Book" ')
+    cursor.execute('SELECT * FROM Book ')
     print(cursor.fetchall())
     cursor.close()
 
