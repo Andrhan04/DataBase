@@ -1,0 +1,4 @@
+PostgreSQL
+    Install try 19.09.2024;
+    password: pass
+    port: 5432
