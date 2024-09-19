@@ -11,10 +11,10 @@ def InsertAuthor(FIO):
     connectBD.conn.commit()
     cursor.close()
 
-def InsertBook(name, ):
-    #вставка новой книги   - не сделано
+def InsertBook(name,Description,place_id ):
+    #вставка новой книги   - не сделано? not try
     cursor = connectBD.conn.cursor()
-    cursor.execute('INSERT INTO Book () VALUES (%s)',(name,))
+    cursor.execute('INSERT INTO Book (name,Description,place_id) VALUES (%s,%s,%s)',(name,Description,place_id))
     connectBD.conn.commit()
     cursor.close()
 
