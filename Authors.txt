@@ -1,0 +1,13 @@
+class Autor{
+    private int id;
+    private string FIO;
+}
+
+
+id = 1;
+FIO = Львова Светлана Ивановна;
+
+id = 2;
+FIO = Львов Валентин Витальевич;
+
+

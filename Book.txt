@@ -1,0 +1,11 @@
+class Book{
+    private int id;
+    private string Name;
+    private text Description;
+    private int place_id; 
+}
+
+id = 1;
+Name = "Учебник";
+Description = "Русский язык 6 класс";
+place_id = 1;

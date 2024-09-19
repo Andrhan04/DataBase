@@ -1,0 +1,6 @@
+class Book_Depository{
+    private int id;
+    private string name;
+    private string place;
+}
+

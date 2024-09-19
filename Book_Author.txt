@@ -1,0 +1,10 @@
+class Book_Author{
+    private int book_id;
+    private int autor_id;
+}
+
+book_id = 1;
+autor_id = 1;
+
+book_id = 2;
+autor_id = 1;
