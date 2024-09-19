@@ -6,13 +6,13 @@ from Base import connectBD
 
 def Create():
     cursor = connectBD.conn.cursor()
-    cursor.execute('CREATE TABLE Author (id SERIAL PRIMARY KEY FIO TEXT)')
-    cursor.commit()
+    cursor.execute('CREATE TABLE Book_Depository (id SERIAL PRIMARY KEY, name TEXT, place TEXT)')
+    connectBD.conn.commit()
     cursor.close()
 
-def InsertAuthor(id,FIO):
+def InsertAuthor(FIO):
     cursor = connectBD.conn.cursor()
-    cursor.execute('INSERT INTO Author(FIO) VALUES (%s)RETURNING id',(FIO))
-    cursor.commit()
-    print(cursor.fetchall())
+    cursor.execute('INSERT INTO Author(FIO) VALUES (%s)',(FIO,))
+    connectBD.conn.commit()
     cursor.close()
+

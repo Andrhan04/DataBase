@@ -1,6 +1,6 @@
 import Base
 from Base import SELECTs
-#from Base import INSERTs
+from Base import INSERTs
 
-
-SELECTs.GetAllBook()
+INSERTs.InsertAuthor("Наум_Яковлевич_Виленкин")
+SELECTs.GetAllAuthor()

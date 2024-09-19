@@ -9,3 +9,10 @@ def GetAllBook():
     cursor.execute('SELECT * FROM "Book" ')
     print(cursor.fetchall())
     cursor.close()
+
+def GetAllAuthor():
+    cursor = connectBD.conn.cursor()
+    cursor.execute('SELECT * FROM Author ')
+    print(cursor.fetchall())
+    cursor.close()
+
