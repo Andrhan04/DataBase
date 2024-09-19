@@ -20,6 +20,7 @@ def InsertBook(name, ):
 
 def Create():
     cursor = connectBD.conn.cursor()
-    cursor.execute('CREATE TABLE Book (id SERIAL PRIMARY KEY, name TEXT, Description TEXT, place_id int)')
+    #cursor.execute('CREATE TABLE Book (id SERIAL PRIMARY KEY, name TEXT, Description TEXT, place_id int)')
     connectBD.conn.commit()
     cursor.close()
+    return "Nothing"
