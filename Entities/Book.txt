@@ -9,3 +9,8 @@ id = 1;
 Name = "Учебник";
 Description = "Русский язык 6 класс";
 place_id = 1;
+
+id = 2;
+Name = "Учебник";
+Description = "Математика язык 6 класс";
+place_id = 5;
