@@ -3,6 +3,7 @@ from psycopg2 import Error
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 import Base
 from Base import connectBD
+import os
 
 def DeleteBook(id):
     # 19.09.2024 удаление книги по id и связей с ней

@@ -3,6 +3,7 @@ from psycopg2 import Error
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 import Base
 from Base import connectBD
+import os
 
 def GetAllBook():
     #Вывод в консоль все книги

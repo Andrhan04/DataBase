@@ -1,6 +1,7 @@
 import psycopg2
 from psycopg2 import Error
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
+import os
 
 conn = psycopg2.connect(dbname = "postgres",
                          user="postgres",
