@@ -9,7 +9,7 @@ def InsertAuthor(FIO):
     #   19.09.2024
     #Вставка нового автора
     cursor = connectBD.conn.cursor()
-    cursor.execute('INSERT INTO Author(FIO) VALUES (%s)',(FIO,))
+    cursor.execute('INSERT INTO Author(FIO) VALUES (%s)',(FIO))
     connectBD.conn.commit()
     cursor.close()
 
@@ -50,7 +50,7 @@ def Create():
     # 19.09.2024
     # создание таблиц (на данный момент не работает, возвращает Строку ничего) 
     cursor = connectBD.conn.cursor()
-    #cursor.execute('CREATE TABLE Book (id SERIAL PRIMARY KEY, name TEXT, Description TEXT, place_id int)')
+    #cursor.execute('CREATE TABLE Author (id SERIAL PRIMARY KEY, FIO TEXT)')
     connectBD.conn.commit()
     cursor.close()
     return "Nothing"
