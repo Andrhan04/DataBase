@@ -5,11 +5,11 @@ import Base
 from Base import connectBD
 import os
 
-def InsertAuthor(FIO, ):
+def InsertAuthor(FIO):
     #   19.09.2024
     #Вставка нового автора
     cursor = connectBD.conn.cursor()
-    cursor.execute('INSERT INTO Author(FIO) VALUES (%s)',(FIO))
+    cursor.execute('INSERT INTO Author(FIO) VALUES (%s)',(FIO,))
     connectBD.conn.commit()
     cursor.close()
 

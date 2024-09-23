@@ -4,7 +4,7 @@ from Base import INSERTs
 from Base import DELETEs
 import os
 
-INSERTs.InsertAuthor("Львов_Валентин_Витальевич")
+#INSERTs.InsertAuthor("Львов_Валентин_Витальевич")
 #INSERTs.InsertAuthor("Наум_Яковлевич_Виленкин")
 #INSERTs.InsertAuthor("Владимир_Иванович_Жохов")
 #INSERTs.InsertAuthor("Чесноков_Александр_Семёнович")
@@ -41,6 +41,15 @@ INSERTs.InsertAuthor("Львов_Валентин_Витальевич")
 #INSERTs.InsertBookAuthor("")
 
 
-SELECTs.GetAllAuthor()
-SELECTs.GetAllBook()
-SELECTs.GetAllPlace()
+arr = SELECTs.GetAllAuthor()
+print("-------------------------------")
+for i in arr:
+    print(i)
+arr = SELECTs.GetAllBook()
+print("-------------------------------")
+for i in arr:
+    print(i)
+arr = SELECTs.GetAllPlace()
+print("-------------------------------")
+for i in arr:
+    print(i)
