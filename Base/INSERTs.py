@@ -5,7 +5,7 @@ import Base
 from Base import connectBD
 import os
 
-def InsertAuthor(FIO):
+def InsertAuthor(FIO, ):
     #   19.09.2024
     #Вставка нового автора
     cursor = connectBD.conn.cursor()
@@ -29,13 +29,13 @@ def InsertBook_Depository(name,place ):
     connectBD.conn.commit()
     cursor.close()
 
-def InsertBookDepository(name,place ):
-    #   20.09.2024
-    #вставка нового книгохранилища - не сделано? not try  
-    cursor = connectBD.conn.cursor()
-    cursor.execute('INSERT INTO Book_Depository (name,place) VALUES (%s,%s)',(name,place))
-    connectBD.conn.commit()
-    cursor.close()
+#def InsertBookDepository(name,place ):
+#    #   20.09.2024
+#    #вставка нового книгохранилища - не сделано? not try  
+#    cursor = connectBD.conn.cursor()
+#    cursor.execute('INSERT INTO Book_Depository (name,place) VALUES (%s,%s)',(name,place))
+#    connectBD.conn.commit()
+#    cursor.close()
 
 def InsertBookAuthor(name,place ):
     #   20.09.2024
