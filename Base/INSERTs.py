@@ -5,6 +5,14 @@ import Base
 from Base import connectBD
 import os
 
+def InsertInstance(book_id,place_id):
+    #   25.09.2024
+    #Вставка новой связи
+    cursor = connectBD.conn.cursor()
+    cursor.execute('INSERT INTO Instance(book_id,place_id) VALUES (%s,%s)',(book_id,place_id))
+    connectBD.conn.commit()
+    cursor.close()
+
 def InsertAuthor(FIO):
     #   19.09.2024
     #Вставка нового автора
@@ -13,11 +21,11 @@ def InsertAuthor(FIO):
     connectBD.conn.commit()
     cursor.close()
 
-def InsertBook(name,Description,place_id ):
+def InsertBook(name,Description):
     #   19.09.2024
     #вставка новой книги   - не сделано?
     cursor = connectBD.conn.cursor()
-    cursor.execute('INSERT INTO Book (name,Description,place_id) VALUES (%s,%s,%s)',(name,Description,place_id))
+    cursor.execute('INSERT INTO Book (name,Description) VALUES (%s,%s)',(name,Description))
     connectBD.conn.commit()
     cursor.close()
 
@@ -42,7 +50,7 @@ def Create():
     # 19.09.2024
     # создание таблиц (на данный момент не работает, возвращает Строку ничего) 
     cursor = connectBD.conn.cursor()
-    #cursor.execute('CREATE TABLE Author (id SERIAL PRIMARY KEY, FIO TEXT)')
+    cursor.execute('CREATE TABLE Book (id SERIAL PRIMARY KEY, name TEXT, Description TEXT)')
     connectBD.conn.commit()
     cursor.close()
     return "Nothing"

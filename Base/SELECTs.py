@@ -12,7 +12,7 @@ def GetAllBook():
     result = cursor.fetchall()
     #print(cursor.fetchall())
     cursor.close()
-    return result
+    return sorted(result)
 
 def GetAllAuthor():
     #Вывод в консоль всех Авторов
@@ -20,7 +20,7 @@ def GetAllAuthor():
     cursor.execute('SELECT * FROM Author ')
     result =cursor.fetchall()
     cursor.close()
-    return result
+    return sorted(result)
 
 def GetAllPlace():
     #Вывод в консоль всех Книгохранилищ
@@ -28,7 +28,7 @@ def GetAllPlace():
     cursor.execute('SELECT * FROM Book_Depository ')
     result = cursor.fetchall()
     cursor.close()
-    return result
+    return sorted(result)
 
 def GetAllBoohAuthor():
     #Вывод в консоль всех Книгохранилищ
@@ -36,4 +36,4 @@ def GetAllBoohAuthor():
     cursor.execute('SELECT * FROM Book_Author ')
     result = cursor.fetchall()
     cursor.close()
-    return result
+    return sorted(result)
