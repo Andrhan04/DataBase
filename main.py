@@ -27,7 +27,7 @@ import os
 #INSERTs.InsertBook("Мертвые души","Это произведение не о том что ты думаешь", "10")
 #INSERTs.InsertBook("Миргород","Сборник", "2")
 #INSERTs.InsertBook("Идиот","Я не читал, а искать лень", "6")
-#
+
 #INSERTs.InsertBook_Depository("Центральная Библиотека","Ленина д.15")
 #INSERTs.InsertBook_Depository("Библиотека имени Гайдара","Пушкина д.24")
 #INSERTs.InsertBook_Depository("Библиотека имени Пушкина","Ербанова д.15")
@@ -38,7 +38,25 @@ import os
 #INSERTs.InsertBook_Depository("Юнешская Библиотека","Геологическая д.23")
 #INSERTs.InsertBook_Depository("Библиотека имени Калашникова","проспект Строитнелей д.27")
 
-#INSERTs.InsertBookAuthor("")
+INSERTs.InsertBookAuthor("1","1")
+INSERTs.InsertBookAuthor("1","2")
+INSERTs.InsertBookAuthor("2","3")
+INSERTs.InsertBookAuthor("2","4")
+INSERTs.InsertBookAuthor("2","5")
+INSERTs.InsertBookAuthor("3","6")
+INSERTs.InsertBookAuthor("4","6")
+INSERTs.InsertBookAuthor("5","7")
+INSERTs.InsertBookAuthor("6","7")
+INSERTs.InsertBookAuthor("7","7")
+INSERTs.InsertBookAuthor("8","8")
+INSERTs.InsertBookAuthor("9","9")
+INSERTs.InsertBookAuthor("10","9")
+INSERTs.InsertBookAuthor("11","10")
+
+
+
+
+
 
 
 arr = SELECTs.GetAllAuthor()

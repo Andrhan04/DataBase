@@ -37,11 +37,11 @@ def InsertBook_Depository(name,place ):
 #    connectBD.conn.commit()
 #    cursor.close()
 
-def InsertBookAuthor(name,place ):
+def InsertBookAuthor(book,author ):
     #   20.09.2024
     #вставка новой связи между автором и книгой - не сделано? not try  
     cursor = connectBD.conn.cursor()
-    cursor.execute('INSERT INTO Book_Author (book_id, author_id) VALUES (%s,%s)',(name,place))
+    cursor.execute('INSERT INTO Book_Author (book_id, author_id) VALUES (%s,%s)',(book,author))
     connectBD.conn.commit()
     cursor.close()
 
