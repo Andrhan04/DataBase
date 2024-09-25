@@ -54,11 +54,6 @@ import os
 #INSERTs.InsertBookAuthor("11","10")
 
 
-
-
-
-
-
 arr = SELECTs.GetAllAuthor()
 print("-------------------------------")
 for i in arr:

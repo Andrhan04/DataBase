@@ -15,7 +15,7 @@ def InsertAuthor(FIO):
 
 def InsertBook(name,Description,place_id ):
     #   19.09.2024
-    #вставка новой книги   - не сделано? not try
+    #вставка новой книги   - не сделано?
     cursor = connectBD.conn.cursor()
     cursor.execute('INSERT INTO Book (name,Description,place_id) VALUES (%s,%s,%s)',(name,Description,place_id))
     connectBD.conn.commit()
@@ -23,23 +23,15 @@ def InsertBook(name,Description,place_id ):
 
 def InsertBook_Depository(name,place ):
     #   20.09.2024
-    #вставка нового книгохранилища - не сделано? not try  
+    #вставка нового книгохранилища - не сделано?
     cursor = connectBD.conn.cursor()
     cursor.execute('INSERT INTO Book_Depository (name,place) VALUES (%s,%s)',(name,place))
     connectBD.conn.commit()
     cursor.close()
 
-#def InsertBookDepository(name,place ):
-#    #   20.09.2024
-#    #вставка нового книгохранилища - не сделано? not try  
-#    cursor = connectBD.conn.cursor()
-#    cursor.execute('INSERT INTO Book_Depository (name,place) VALUES (%s,%s)',(name,place))
-#    connectBD.conn.commit()
-#    cursor.close()
-
 def InsertBookAuthor(book,author ):
     #   20.09.2024
-    #вставка новой связи между автором и книгой - не сделано? not try  
+    #вставка новой связи между автором и книгой - не сделано? 
     cursor = connectBD.conn.cursor()
     cursor.execute('INSERT INTO Book_Author (book_id, author_id) VALUES (%s,%s)',(book,author))
     connectBD.conn.commit()
