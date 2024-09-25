@@ -45,6 +45,13 @@ def InsertBookAuthor(book,author ):
     connectBD.conn.commit()
     cursor.close()
 
+def InsertInstance(book,place ):
+    #   25.09.2024
+    #вставка новой связи между автором и книгой - не сделано? 
+    cursor = connectBD.conn.cursor()
+    cursor.execute('INSERT INTO Instance (book_id, place_id) VALUES (%s,%s)',(book,place))
+    connectBD.conn.commit()
+    cursor.close()
 
 def Create():
     # 19.09.2024

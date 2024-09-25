@@ -58,6 +58,19 @@ import os
 
 #UPDATEs.UpdateBookAuthor("1","0","1", "1")
 
+#INSERTs.InsertInstance('1',"1")
+INSERTs.InsertInstance('11',"6")
+INSERTs.InsertInstance('2',"5")
+INSERTs.InsertInstance('3',"7")
+INSERTs.InsertInstance('4',"8")
+INSERTs.InsertInstance('5',"9")
+INSERTs.InsertInstance('6',"9")
+INSERTs.InsertInstance('7',"4")
+INSERTs.InsertInstance('8',"3")
+INSERTs.InsertInstance('9',"10")
+INSERTs.InsertInstance('10',"2")
+
+
 arr = SELECTs.GetAllAuthor()
 print("-------------------------------")
 for i in arr:
