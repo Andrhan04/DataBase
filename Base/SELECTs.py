@@ -29,3 +29,11 @@ def GetAllPlace():
     result = cursor.fetchall()
     cursor.close()
     return result
+
+def GetAllBoohAuthor():
+    #Вывод в консоль всех Книгохранилищ
+    cursor = connectBD.conn.cursor()
+    cursor.execute('SELECT * FROM Book_Author ')
+    result = cursor.fetchall()
+    cursor.close()
+    return result
