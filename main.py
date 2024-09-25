@@ -2,6 +2,8 @@ import Base
 from Base import SELECTs
 from Base import INSERTs
 from Base import DELETEs
+from Base import UPDATEs
+
 import os
 
 #INSERTs.InsertAuthor("Львов_Валентин_Витальевич")
@@ -53,6 +55,7 @@ import os
 #INSERTs.InsertBookAuthor("10","9")
 #INSERTs.InsertBookAuthor("11","10")
 
+#UPDATEs.UpdateBookAuthor("1","0","1", "1")
 
 arr = SELECTs.GetAllAuthor()
 print("-------------------------------")
