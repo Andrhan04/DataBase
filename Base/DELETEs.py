@@ -9,8 +9,8 @@ def DeleteBook(id,):
     # 19.09.2024 удаление книги по id и связей с ней
     # возвращает колличество строк попавших в запрос
     cursor = connectBD.conn.cursor()
-    cursor.execute('DELETE FROM Book WHERE id = %s', id)
-    cursor.execute('DELETE FROM Book_Author WHERE book_id = %s', id)
+    cursor.execute('DELETE FROM Book WHERE id = %s',(id,))
+    cursor.execute('DELETE FROM Book_Author WHERE book_id = %s', (id,))
     res = cursor.rowcount
     connectBD.conn.commit()
     cursor.close()

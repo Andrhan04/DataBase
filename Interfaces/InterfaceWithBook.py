@@ -1,5 +1,5 @@
 import CRUD
-import CRUD_for_book from CRUD
+from CRUD import CRUD_for_book
 import os
 
 def Mydef():
