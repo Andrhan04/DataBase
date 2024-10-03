@@ -29,10 +29,11 @@ def UpdateBookDepository(id, name, place):
     connectBD.conn.commit()
     cursor.close()
 
-def UpdateBookAuthor(old_book_id, old_author_id, new_book_id, new_author_id):
-    #   19.09.2024
-    #Вставка нового автора
+
+def UpdateBookAuthor(book,author ):
+    #   20.09.2024
+    #вставка новой связи между автором и книгой - не сделано? 
     cursor = connectBD.conn.cursor()
-    cursor.execute('UPDATE Book_Author SET book_id = (%s), author_id = (%s) WHERE book_id = %s AND author_id = %s',(new_book_id, new_author_id, old_book_id, old_author_id, ))
+    cursor.execute('UPDATE Book_Author SET author_id = (%s) WHERE book_id = %s',(author,book))
     connectBD.conn.commit()
     cursor.close()
