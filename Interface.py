@@ -1,4 +1,5 @@
 import CRUD
+import CRUD_for_book from CRUD
 import os
 
 def Mydef():
@@ -16,10 +17,10 @@ while(x != 0):
     x = int(input())
     os.system('cls')
     if(x==1):
-        CRUD.InsertBook()
+        CRUD_for_book.InsertBook()
     if(x==2):
-        CRUD.DeleteBook()
+        CRUD_for_book.DeleteBook()
     if(x==3):
-        CRUD.RedactBook()
+        CRUD_for_book.RedactBook()
     if(x==4):
-        CRUD.PrintAllBook()
+        CRUD_for_book.PrintAllBook()
