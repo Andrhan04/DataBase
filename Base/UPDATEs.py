@@ -13,11 +13,11 @@ def UpdateAuthor(id, FIO):
     connectBD.conn.commit()
     cursor.close()
 
-def UpdateBook(id, name, description, place):
+def UpdateBook(id, name, description):
     #   19.09.2024
     #Вставка нового автора
     cursor = connectBD.conn.cursor()
-    cursor.execute('UPDATE Book SET name = (%s), description = (%s), place_id = (%s) WHERE id = %s ',(name,description,place,id,))
+    cursor.execute('UPDATE Book SET name = (%s), description = (%s) WHERE id = %s ',(name,description,id))
     connectBD.conn.commit()
     cursor.close()
 
