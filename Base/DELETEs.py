@@ -38,7 +38,15 @@ def DeleteBookAuthor(book_id, author_id):
     cursor.close()
     return res
     
-
+def DeleteBookDepository(id):
+    #20.09.2024 удаление связи автора и книги
+    # возвращает колличество строк попавших в запрос
+    cursor = connectBD.conn.cursor()
+    cursor.execute('DELETE FROM Book_Depository WHERE id = %s', (id,))
+    res = cursor.rowcount
+    connectBD.conn.commit()
+    cursor.close()
+    return res
 
 
 

@@ -44,3 +44,19 @@ def GetBook(id):
     #print(cursor.fetchall())
     cursor.close()
     return sorted(result)
+
+def GetPlace(id):
+    cursor = connectBD.conn.cursor()
+    cursor.execute('SELECT * FROM Book_Depository WHERE id = %s',(id,))
+    result = cursor.fetchall()
+    #print(cursor.fetchall())
+    cursor.close()
+    return sorted(result)
+
+def GetAuthor(id):
+    cursor = connectBD.conn.cursor()
+    cursor.execute('SELECT * FROM Author WHERE id = %s',(id,))
+    result = cursor.fetchall()
+    #print(cursor.fetchall())
+    cursor.close()
+    return sorted(result)
