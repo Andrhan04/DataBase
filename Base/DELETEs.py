@@ -9,18 +9,21 @@ def DeleteBook(id,):
     # 19.09.2024 удаление книги по id и связей с ней
     # возвращает колличество строк попавших в запрос
     cursor = connectBD.conn.cursor()
-    cursor.execute('DELETE FROM Book WHERE id = %s',(id,))
+    cursor.execute('DELETE CASCADE FROM Book WHERE id = %s',(id,))
     cursor.execute('DELETE FROM Book_Author WHERE book_id = %s', (id,))
     res = cursor.rowcount
     connectBD.conn.commit()
     cursor.close()
     return res
 
+
+
+
 def DeleteAuthor(id):
     # 20.09.2024 удаление автора по id и связей с ним
     # возвращает колличество строк попавших в запрос
     cursor = connectBD.conn.cursor()
-    cursor.execute('DELETE FROM Author WHERE id = %s', (str(id), ))
+    cursor.execute('DELETE CASCADE FROM Author WHERE id = %s', (str(id), ))
     cursor.execute('DELETE FROM Book_Author WHERE author_id = %s', id)
     res = cursor.rowcount
     connectBD.conn.commit()

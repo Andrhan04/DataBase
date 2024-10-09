@@ -8,7 +8,7 @@ import time
 
 def Redact():
     id = int(input("Введите id книги для редактирования "))
-    name = input("Введите новое название книги ")
+    name = input("Введите новое ФИО ")
     UPDATEs.UpdateAuthor(id,name)
 
 def Delete():

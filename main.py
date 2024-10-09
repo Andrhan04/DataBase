@@ -13,11 +13,13 @@ while(x != 0):
     x =int(input())        
     if(x==1):
         import Interfaces.InterfaceWithBook
-    if(x==2):
+    elif(x==2):
         import Interfaces.InterfaceWithAuthor
-    if(x==3):
-        #import Interfaces.InterfaceWithPlace
-        print(3)
+    elif(x==3):
+        import Interfaces.InterfaceWithPlace
+        #print(3)
+    else:
+        break
 
 
 

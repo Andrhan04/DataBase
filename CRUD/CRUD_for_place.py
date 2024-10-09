@@ -13,11 +13,11 @@ def Redact():
     UPDATEs.UpdateBookDepository(id,name,place)
 
 def Delete():
-    id = int(input("Введите id удаляемого автора"))
+    id = int(input("Введите id удаляемого места "))
     DELETEs.DeleteBookDepo(str(id))
 
 def Insert():
-    name = input("Введите ФИО ")
+    name = input("Введите новое название ")
     place = input("Введите новое место ")
     INSERTs.InsertBook_Depository(name,place)
 
