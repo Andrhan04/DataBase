@@ -16,7 +16,8 @@ while(x != 0):
     if(x==2):
         import Interfaces.InterfaceWithAuthor
     if(x==3):
-        import Interfaces.InterfaceWithPlace
+        #import Interfaces.InterfaceWithPlace
+        print(3)
 
 
 
