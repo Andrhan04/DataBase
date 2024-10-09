@@ -12,18 +12,19 @@ while(x != 0):
     Work()
     x =int(input())        
     if(x==1):
-        import Interfaces.InterfaceWithBook
+        import Interfaces.InterfaceWithBook as inter
+        inter.main()
     elif(x==2):
-        import Interfaces.InterfaceWithAuthor
+        import Interfaces.InterfaceWithAuthor as inter
+        inter.main()
     elif(x==3):
-        import Interfaces.InterfaceWithPlace
+        import Interfaces.InterfaceWithPlace as inter
+        inter.main()
         #print(3)
     else:
         break
 
 
-
- 
 os.system('cls')
 os.system('exit')
 

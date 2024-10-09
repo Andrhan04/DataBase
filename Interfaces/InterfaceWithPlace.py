@@ -12,18 +12,18 @@ def Mydef():
     print("Для выхода нажмите 0")
 
 
-x = 1
-while(x != 0):
-    Mydef()
-    x = int(input())
-    os.system('cls')
-    if(x==1):
-        CRUD.Insert()
-    if(x==2):
-        CRUD.Delete()
-    if(x==3):
-        CRUD.Redact()
-    if(x==4):
-        CRUD.PrintAll()
-    if(x==5):
-        CRUD.Print()
+def main():
+    while(x != 0):
+        Mydef()
+        x = int(input())
+        os.system('cls')
+        if(x==1):
+            CRUD.Insert()
+        if(x==2):
+            CRUD.Delete()
+        if(x==3):
+            CRUD.Redact()
+        if(x==4):
+            CRUD.PrintAll()
+        if(x==5):
+            CRUD.Print()
