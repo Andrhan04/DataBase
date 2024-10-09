@@ -30,4 +30,5 @@ def PrintAllBook():
 def PrintBook():
     id = int(input("Введите id книги "))
     arr = SELECTs.GetBook(id)
+    print(arr)
     time.sleep(5)
