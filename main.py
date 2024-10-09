@@ -5,6 +5,7 @@ def Work():
 
 x = 1
 while(x != 0):
+    os.system('cls')
     Work()
     x =int(input())
     if(x == 0):
@@ -12,6 +13,7 @@ while(x != 0):
         os.system('exit')
     if(x==1):
         import Interfaces.InterfaceWithBook as InterfaceWithBook
+    
 
 
 

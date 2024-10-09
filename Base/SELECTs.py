@@ -36,3 +36,11 @@ def GetAllBoohAuthor():
     result = cursor.fetchall()
     cursor.close()
     return sorted(result)
+
+def GetBook(id):
+    cursor = connectBD.conn.cursor()
+    cursor.execute('SELECT * FROM Book WHERE id = %s',(id,))
+    result = cursor.fetchall()
+    #print(cursor.fetchall())
+    cursor.close()
+    return sorted(result)

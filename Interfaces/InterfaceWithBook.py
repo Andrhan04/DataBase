@@ -24,3 +24,5 @@ while(x != 0):
         CRUD_for_book.RedactBook()
     if(x==4):
         CRUD_for_book.PrintAllBook()
+    if(x==5):
+        CRUD_for_book.PrintBook()
