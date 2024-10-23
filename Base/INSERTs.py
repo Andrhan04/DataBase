@@ -25,9 +25,14 @@ def InsertBook(name,Description):
     #   19.09.2024
     #вставка новой книги   - не сделано?
     cursor = connectBD.conn.cursor()
-    cursor.execute('INSERT INTO Book (name,Description) VALUES (%s,%s)',(name,Description))
+    s = "Complete"
+    try:
+        cursor.execute('INSERT INTO Book (name,Description) VALUES (TRIM(%s),TRIM(%s))',(name,Description))
+    except:
+        s = ("Неверные значения")
     connectBD.conn.commit()
     cursor.close()
+    return s
 
 def InsertBook_Depository(name,place ):
     #   20.09.2024

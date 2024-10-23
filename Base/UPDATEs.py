@@ -17,7 +17,10 @@ def UpdateBook(id, name, description):
     #   19.09.2024
     #Вставка нового автора
     cursor = connectBD.conn.cursor()
-    cursor.execute('UPDATE Book SET name = (%s), description = (%s) WHERE id = %s ',(name,description,id))
+    try:
+        cursor.execute('UPDATE Book SET name = TRIM(%s), description = TRIM(%s) WHERE id = %s ',(name,description,id))
+    except:
+        print("Неверные значения")
     connectBD.conn.commit()
     cursor.close()
 

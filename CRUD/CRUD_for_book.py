@@ -15,37 +15,37 @@ def Redact():
             old_name[0][0]
             break
         except:
-            print("Что то не то")
-            time.sleep(2)
-
+            print("Что то не то с id")
     print("Старые занчения")
     print(old_name[0])
-    name = input("Введите новое название книги ")
+    name = input("Введите новое название книги (Если не хочешь изменять нажми enter) ")
     if(name == ""): name = old_name[0][1]
-    description = input("Введите новое описание ")
+    description = input("Введите новое описание (Если не хочешь изменять нажми enter) ")
     if(description == ""): description = old_name[0][2]
-    UPDATEs.UpdateBook(id,name,description)
+    print(UPDATEs.UpdateBook(id,name,description))
 
 def Delete():
+    PrintAll()
     try:
         id = int(input("Введите id удаляемой книги "))
-        DELETEs.DeleteBook(str(id))
+        i = DELETEs.DeleteBook(str(id))
+        return i
     except:
-        print("Что то не то")
-        time.sleep(2)
-        return
+        print("Что то не то с id")
+        return 0
 
 
 def Insert():
     name = input("Введите название книги ")
     description = input("Введите описание ")
-    INSERTs.InsertBook(name,description)
+    print(INSERTs.InsertBook(name,description))
 
 def PrintAll():
     arr = SELECTs.GetAllBook()
-    for i in arr:
-        print(i)
-    i = input()
+    for element in arr:
+        print("{:3d}     {:30s} {:s}".format(element[0],element[1],element[2]))
+    print("Для закрытия введи что-нибудь")
+    
 
 def Print():
     id = 1
@@ -56,16 +56,18 @@ def Print():
             arr[0][0]
             break
         except:
-            print("Что то не то")
+            print("Что то не то с id")
             time.sleep(2)
-    print(arr)
-    i = input()
+    for element in arr:
+        print("{:3d}     {:30s} {:s}".format(element[0],element[1],element[2]))
+    print("Для закрытия введи что-нибудь")
 
 def DeleteMany():
+    PrintAll()
     list_of_id = []
-    for element in input("Введите идентификационный номер: ").split():
+    for element in input("Введите идентификационные номера через пробел: ").split():
         if(element.isdigit()):
             list_of_id.append(((element),))
         else:
-            print("Не число")
+            print("Что то не то с id")
     DELETEs.DeleteBookMany(list_of_id)

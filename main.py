@@ -3,7 +3,7 @@ def Work():
     print("Для закрытия нажми 0")
     print("Для работы с книгой нажми 1")
     print("Для работы с автором нажми 2")
-    print("Для работы с книго хранилищем нажми 3")
+    print("Для работы с книгохранилищем нажми 3")
 
 
 x = 1
@@ -14,12 +14,14 @@ while(x != 0):
     if(x==1):
         import Interfaces.InterfaceWithBook as inter
         inter.main()
+        #print(1)
     elif(x==2):
-        import Interfaces.InterfaceWithAuthor as inter
-        inter.main()
+        import Interfaces.InterfaceWithAuthor as interA
+        #interA.main()
+        #print(2)
     elif(x==3):
         import Interfaces.InterfaceWithPlace as inter
-        inter.main()
+        #inter.main()
         #print(3)
     else:
         break
@@ -27,5 +29,3 @@ while(x != 0):
 
 os.system('cls')
 os.system('exit')
-
-
