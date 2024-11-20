@@ -10,7 +10,7 @@ conn = psycopg2.connect(
 cursor = conn.cursor()
 
 cursor.execute('''
-   CREATE TABLE Book (id SERIAL PRIMARY KEY, name TEXT NOT NULL CHECK (TRIM(name) = '' IS NOT TRUE), Description TEXT);
+   CREATE TABLE Book (id SERIAL PRIMARY KEY, name TEXT NOT NULL CHECK (TRIM(name) = '' IS NOT TRUE), Description TEXT NOT NULL);
                ''')
 cursor.execute('''
     CREATE TABLE author (id SERIAL PRIMARY KEY, fio TEXT NOT NULL CHECK (TRIM(fio) = '' IS NOT TRUE));

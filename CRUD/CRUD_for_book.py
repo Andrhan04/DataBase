@@ -74,11 +74,6 @@ def DeleteMany():
 
 
 def Find():
-    try:
-        x = int(input("Для поиска по названию нажми 1, по описанию 2, по описанию и названию 3\n"))
-    except:
-        input("x не число (Для закрытия введи что-нибудь)")
-        return
     limit = 1
     try:
         limit = int(input("Введите максимальное колличество книг для получения (Если стандартное то введи q)"))
@@ -95,34 +90,19 @@ def Find():
     
     if(offset < 0 or offset >= 32768):
         offset = 0
-    if(x == 1):
-        name = input("Введите название книги ")
-        if(name == ""):
-            print("Нет ничего с пустым названием")
-            return
-        else:
-            while(name.find('  ') >= 0):
+
+    name = input("Введите название книги ")
+    while(name.find('  ') >= 0):
                 name = name.replace('  ', ' ')
-            arr = SELECTs.GetBookForName(name,limit,offset)
-    elif(x==2):
-        description = input("Введите описание ")
-        while(description.find('  ')>=0):
+    description = input("Введите описание ")
+    while(description.find('  ')>=0):
                 description= description.replace('  ', ' ')
+    if(name == ""):
         arr = SELECTs.GEtBookForDesc(description,limit,offset)
-    elif(x==3):
-        name = input("Введите название книги ")
-        description = input("Введите описание ")
-        if(name == ""):
-            print("Нет ничего с пустым названием")
-            return
-        else:
-            while(name.find('  ') >= 0):
-                name = name.replace('  ', ' ')
-            while(description.find('  ')>=0):
-                description= description.replace('  ', ' ')
-            arr = SELECTs.GetBookForAtribute(name,description,limit,offset)
+    elif(description == ""):
+        arr = SELECTs.GetBookForName(name,limit,offset)
     else:
-        print("Нет такой функции")
+        arr = SELECTs.GetBookForAtribute(name,description,limit,offset)    
 
     if(arr == []):
         print("НЕТУ НИЧЕГО")
