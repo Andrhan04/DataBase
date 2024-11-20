@@ -11,8 +11,8 @@ def Mydef():
     print("Для получения нажмите 5")
     print("Для выхода нажмите 0")
 
-
 def main():
+    x = 1
     while(x != 0):
         Mydef()
         x = int(input())

@@ -11,6 +11,7 @@ def Mydef():
     print("Для получения всех книги нажмите 4")
     print("Для получения книги нажмите 5")
     print("Для удаления книг нажмите 6")
+    print("Для поиска по атрибутам книги нажмите 7")
     print("Для выхода нажмите 0")
 
 def main():
@@ -34,6 +35,8 @@ def main():
             i = input()
         elif(x==6):
             CRUD.DeleteMany()
+        elif(x==7):
+            CRUD.Find()
         else:
             break
     return 0

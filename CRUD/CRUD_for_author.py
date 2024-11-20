@@ -7,8 +7,19 @@ import os
 import time
 
 def Redact():
-    id = int(input("Введите id книги для редактирования "))
-    name = input("Введите новое ФИО ")
+    id = 1
+    while(True):
+        try:
+            id = int(input("Введите id для редактирования "))
+            old_name = SELECTs.GetAuthor(id)
+            old_name[0][0]
+            break
+        except:
+            print("Что то не то с id")
+    print("Старые занчения")
+    print(old_name[0])
+    name = input("Введите новое ФИО (Если не хочешь изменять нажми enter) ")
+    if(name == ""): name = old_name[0][1]
     UPDATEs.UpdateAuthor(id,name)
 
 def Delete():

@@ -71,3 +71,64 @@ def DeleteMany():
         else:
             print("Что то не то с id")
     DELETEs.DeleteBookMany(list_of_id)
+
+
+def Find():
+    try:
+        x = int(input("Для поиска по названию нажми 1, по описанию 2, по описанию и названию 3\n"))
+    except:
+        input("x не число (Для закрытия введи что-нибудь)")
+        return
+    limit = 1
+    try:
+        limit = int(input("Введите максимальное колличество книг для получения (Если стандартное то введи q)"))
+    except:
+        limit = 5
+    if(limit < 0 or limit >= 32768):
+        limit = 5
+    
+    offset = 0
+    try:
+        offset = int(input("Введите смещение (Если стандартное то введи q)"))
+    except:
+        offset = 0
+    
+    if(offset < 0 or offset >= 32768):
+        offset = 0
+    if(x == 1):
+        name = input("Введите название книги ")
+        if(name == ""):
+            print("Нет ничего с пустым названием")
+            return
+        else:
+            while(name.find('  ') >= 0):
+                name = name.replace('  ', ' ')
+            arr = SELECTs.GetBookForName(name,limit,offset)
+    elif(x==2):
+        description = input("Введите описание ")
+        while(description.find('  ')>=0):
+                description= description.replace('  ', ' ')
+        arr = SELECTs.GEtBookForDesc(description,limit,offset)
+    elif(x==3):
+        name = input("Введите название книги ")
+        description = input("Введите описание ")
+        if(name == ""):
+            print("Нет ничего с пустым названием")
+            return
+        else:
+            while(name.find('  ') >= 0):
+                name = name.replace('  ', ' ')
+            while(description.find('  ')>=0):
+                description= description.replace('  ', ' ')
+            arr = SELECTs.GetBookForAtribute(name,description,limit,offset)
+    else:
+        print("Нет такой функции")
+
+    if(arr == []):
+        print("НЕТУ НИЧЕГО")
+    else:
+        for element in arr:
+            print("{:3d}     {:30s} {:s}".format(element[0],element[1],element[2]))
+    input("Для закрытия введи что-нибудь")
+    return
+    

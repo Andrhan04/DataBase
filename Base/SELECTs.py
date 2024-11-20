@@ -60,3 +60,28 @@ def GetAuthor(id):
     #print(cursor.fetchall())
     cursor.close()
     return sorted(result)
+
+
+def GetBookForName(name, limit, offset):
+    cursor = connectBD.conn.cursor()
+    cursor.execute("SELECT * FROM Book WHERE ' '||LOWER(name)||' ' ILIKE %s LIMIT %s OFFSET %s",('%'+name+'%',limit,offset))
+    result = cursor.fetchall()
+    cursor.close()
+    return sorted(result)
+
+def GEtBookForDesc(description, limit, offset):
+    cursor = connectBD.conn.cursor()
+    if(description == ""):
+        cursor.execute("SELECT * FROM Book WHERE LOWER(description) ILIKE %s LIMIT %s OFFSET %s",(description,limit,offset))
+    else:
+        cursor.execute("SELECT * FROM Book WHERE LOWER(description) ILIKE %s LIMIT %s OFFSET %s",('%'+description+'%',limit,offset))
+    result = cursor.fetchall()
+    cursor.close()
+    return sorted(result)
+
+def GetBookForAtribute(name, description, limit, offset):
+    cursor = connectBD.conn.cursor()
+    cursor.execute('SELECT * FROM Book WHERE ' '||LOWER(name)||' ' ILIKE %s AND LOWER(description) ILIKE %s LIMIT %s OFFSET %s',('%'+name+'%','%'+description+'%',limit,offset))
+    result = cursor.fetchall()
+    cursor.close()
+    return sorted(result)
