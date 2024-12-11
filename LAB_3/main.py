@@ -1,5 +1,5 @@
 from Classes import TankTree
-
+import os
 def get_valid_input(prompt):
     while True:
         user_input = input(prompt).strip()
@@ -17,7 +17,6 @@ def get_valid_int(prompt):
 
 tree = TankTree()
 while True:
-        print("Меню:")
         print("1. Добавить лист")
         print("2. Удалить узел по ID")
         print("3. Удалить поддерево по ID родителя")
@@ -29,6 +28,7 @@ while True:
         print("9. Выход")
 
         choice = get_valid_int("Выберите действие: ")
+        os.system('cls')
         if choice == 1:
             parent_id = get_valid_int("Введите ID родителя: ")
             name = get_valid_input("Введите имя название танка: ")
