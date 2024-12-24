@@ -32,5 +32,6 @@ steps = [
                          (11,6,'ИС-1'),
                          (12,6,'КВ-1'),
                          (13,6,'Pz.Kpfw. VI Tiger')
-         """)
+         """),
+         step("ALTER SEQUENCE tanks_id_seq RESTART WITH 22 ")
 ]

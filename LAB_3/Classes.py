@@ -6,7 +6,7 @@ class TankTree:
         self.cursor = self.conn.cursor()
     def add_leaf(self, parent_id, name):
         self.cursor.execute(
-            "INSERT INTO tanks (parent_id, name) VALUES (%s, %s, %s)",(parent_id, name)
+            "INSERT INTO tanks (parent_id, name) VALUES (%s, %s)",(parent_id, name)
         )
         self.conn.commit()
     def delete_leaf(self, leaf_id):
