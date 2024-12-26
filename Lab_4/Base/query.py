@@ -35,7 +35,7 @@ def GetNode(id = "", conn = psycopg2.connect):
         cursor = conn.cursor()
         cursor.execute('''
             SELECT *
-            FROM path_enum
+            FROM tank
             WHERE id = %s
         ''', (id,))
         
@@ -51,18 +51,18 @@ def GetNode(id = "", conn = psycopg2.connect):
     
 # Are there node
 # return True or False
-def GetNodeByTitle(title = "" ,conn = psycopg2.connect):
+def GetNodeByname(name = "" ,conn = psycopg2.connect):
     try:
-        if(title == ""):
-            title = input("Введите назвние: ")
+        if(name == ""):
+            name = input("Введите назвние: ")
 
-        title = title.lower()
+        name = name.lower()
         cursor = conn.cursor()
         cursor.execute('''
             SELECT *
-            FROM path_enum
-            WHERE LOWER(title) = %s
-        ''', (title,))
+            FROM tank
+            WHERE LOWER(name) = %s
+        ''', (name,))
         
         result = cursor.fetchall()
 
@@ -78,15 +78,15 @@ def GetNodeByTitle(title = "" ,conn = psycopg2.connect):
 # ? return id
 def AddLeaf(conn):
     try:
-        title = input("Введите название: ")        
-        title = title.strip()
-        if(title == ""):
+        name = input("Введите название: ")        
+        name = name.strip()
+        if(name == ""):
             return "Название не может быть пустым"
         
-        title = ' '.join(title.split())
+        name = ' '.join(name.split())
 
-        if(GetNodeByTitle(conn=conn, title = title)):
-            return "Узел с названием " + str(title) + " уже существует"
+        if(GetNodeByname(conn=conn, name = name)):
+            return "Узел с названием " + str(name) + " уже существует"
 
         parent_id = input("Введите идентификатор родителя: ")
         parent_id = parent_id.strip()
@@ -101,13 +101,13 @@ def AddLeaf(conn):
             return "Нет такого родителя"
         cursor = conn.cursor()
         cursor.execute('''
-            INSERT INTO path_enum (title, path) VALUES (%s, ' ')   
+            INSERT INTO tank (name, path) VALUES (%s, ' ')   
             RETURNING id                     
-                    ''', (title, ))
+                    ''', (name, ))
         id = cursor.fetchall()[0]
         cursor.execute('''
-            UPDATE path_enum SET path = (
-                SELECT path FROM path_enum WHERE id = %s
+            UPDATE tank SET path = (
+                SELECT path FROM tank WHERE id = %s
             ) || %s || '/'
             WHERE id = %s
                        ''', (parent_id,id,id,))
@@ -143,7 +143,7 @@ def DeleteLeaf(conn):
 
         cursor = conn.cursor()        
         cursor.execute('''
-            DELETE FROM path_enum
+            DELETE FROM tnk
             WHERE id = %s        
                     ''', (id,))
         
@@ -182,10 +182,10 @@ def DeleteSubtree(conn):
 
         cursor = conn.cursor()
         cursor.execute('''                   
-            DELETE FROM path_enum WHERE id IN (
-                SELECT id FROM path_enum
+            DELETE FROM tank WHERE id IN (
+                SELECT id FROM tank
                 WHERE path LIKE (
-                    SELECT path || '%%' FROM path_enum WHERE id = %s
+                    SELECT path || '%%' FROM tank WHERE id = %s
                 )
             )
             ''', (id,))
@@ -226,10 +226,10 @@ def DeleteNode(conn):
         
         cursor.execute(
             '''
-                DELETE FROM path_enum WHERE id = %s
+                DELETE FROM tank WHERE id = %s
             ''', (id,))
         cursor.execute('''
-                    UPDATE path_enum SET path = (
+                    UPDATE tank SET path = (
                         REPLACE(
                             path, '/%s/', '/'
                         )
@@ -248,7 +248,7 @@ def DeleteNode(conn):
         return("Не удалось удалить узел")
 
 # Получение прямых потомков. На вход Идентификатор узла
-# ? return Array[id, title, parent_id]
+# ? return Array[id, name, parent_id]
 def GetDirectDescendants(conn):
     try:       
         id = input("Введите идентификатор: ")
@@ -261,16 +261,16 @@ def GetDirectDescendants(conn):
         
         cursor = conn.cursor()
         cursor.execute('''
-            WITH RECURSIVE tree(id, title, path, level, sort_key) AS(
-                SELECT pe.id, pe.title, pe.path, 0 AS level, pe.path ||'' AS sort_key
-                FROM path_enum pe
+            WITH RECURSIVE tree(id, name, path, level, sort_key) AS(
+                SELECT pe.id, pe.name, pe.path, 0 AS level, pe.path ||'' AS sort_key
+                FROM tank pe
                 WHERE pe.id = %s
                 UNION 
-                SELECT p.id, p.title, p.path, t.level + 1, t.sort_key ||  p.title AS sort_key
-                FROM path_enum p INNER JOIN tree t ON p.path = t.path ||  p.id || '/'
+                SELECT p.id, p.name, p.path, t.level + 1, t.sort_key ||  p.name AS sort_key
+                FROM tank p INNER JOIN tree t ON p.path = t.path ||  p.id || '/'
                 WHERE t.level = 0
             )
-            SELECT id, title, path, level
+            SELECT id, name, path, level
             FROM tree
             ORDER BY sort_key
                     ''', (id,))
@@ -290,7 +290,7 @@ def GetDirectDescendants(conn):
         return("Не удалось получить прямых потомков")
 
 # Получение прямого родителя. На вход Идентификатор узла
-# ? return Array[id, title, parent_id]
+# ? return Array[id, name, parent_id]
 def GetDirectParent(conn):
     try:            
         id = input("Введите идентификатор: ")
@@ -302,19 +302,19 @@ def GetDirectParent(conn):
             return "Идентификатор  должен быть положительным целым числом"
         cursor = conn.cursor()   
         cursor.execute('''
-            WITH RECURSIVE tree(id, title, path, level, sort_key) AS(
-                SELECT id, title, path, 0 AS level, 
+            WITH RECURSIVE tree(id, name, path, level, sort_key) AS(
+                SELECT id, name, path, 0 AS level, 
                     path AS sort_key
-                FROM path_enum 
+                FROM tank 
                 WHERE id = %s
                 UNION 
-                SELECT p.id, p.title, p.path, t.level - 1,
+                SELECT p.id, p.name, p.path, t.level - 1,
                     p.path  AS sort_key
-                FROM path_enum p INNER JOIN tree t ON
+                FROM tank p INNER JOIN tree t ON
                     p.path || t.id || '/' = t.path
                 WHERE t.level = 0
             )
-            SELECT id, title, path, level
+            SELECT id, name, path, level
             FROM tree
             ORDER BY sort_key
                         ''', (id,))           
@@ -336,7 +336,7 @@ def GetDirectParent(conn):
         return("Не удалось получить прямых потомков")
 
 # Получение всех потомков. На вход Идентификатор узла
-# ? return Array[id, title, parent_id]
+# ? return Array[id, name, parent_id]
 def GetAllDescendants(id = "", conn = psycopg2.connect):
     try:         
         if(id == ""):            
@@ -354,15 +354,15 @@ def GetAllDescendants(id = "", conn = psycopg2.connect):
 
         cursor = conn.cursor()                
         cursor.execute('''
-            WITH RECURSIVE tree(id, title, path, level, sort_key) AS(
-                SELECT pe.id, pe.title, pe.path, 0 AS level, pe.path ||'' AS sort_key
-                FROM path_enum pe
+            WITH RECURSIVE tree(id, name, path, level, sort_key) AS(
+                SELECT pe.id, pe.name, pe.path, 0 AS level, pe.path ||'' AS sort_key
+                FROM tank pe
                 WHERE pe.id = %s
                 UNION ALL
-                SELECT p.id, p.title, p.path, t.level + 1, t.sort_key || p.title || '/' AS sort_key
-                FROM path_enum p INNER JOIN tree t ON p.path = t.path ||  p.id || '/'
+                SELECT p.id, p.name, p.path, t.level + 1, t.sort_key || p.name || '/' AS sort_key
+                FROM tank p INNER JOIN tree t ON p.path = t.path ||  p.id || '/'
             )
-            SELECT id, title, path, level
+            SELECT id, name, path, level
             FROM tree
             ORDER BY sort_key
                     ''', (id,))
@@ -384,7 +384,7 @@ def GetAllDescendants(id = "", conn = psycopg2.connect):
         return("Не удалось получить всех потомков")
 
 # Получение всех родителей. На вход Идентификатор узла
-# ? return Array[id, title, parent_id]
+# ? return Array[id, name, parent_id]
 def GetAllParents(conn):
     try:
         id = input("Введите идентификатор: ")
@@ -396,18 +396,18 @@ def GetAllParents(conn):
             return "Идентификатор  должен быть положительным целым числом"
         cursor = conn.cursor()        
         cursor.execute('''
-            WITH RECURSIVE tree(id, title, path, level, sort_key) AS(
-                SELECT id, title, path, 0 AS level, 
+            WITH RECURSIVE tree(id, name, path, level, sort_key) AS(
+                SELECT id, name, path, 0 AS level, 
                     path AS sort_key
-                FROM path_enum 
+                FROM tank 
                 WHERE id = %s
                 UNION 
-                SELECT p.id, p.title, p.path, t.level - 1,
+                SELECT p.id, p.name, p.path, t.level - 1,
                     p.path  AS sort_key
-                FROM path_enum p INNER JOIN tree t ON
+                FROM tank p INNER JOIN tree t ON
                     p.path || t.id || '/' = t.path
             )
-            SELECT id, title, path, level
+            SELECT id, name, path, level
             FROM tree
             ORDER BY sort_key
                         ''', (id,))
@@ -434,8 +434,8 @@ def GetAll(conn):
         cursor = conn.cursor()        
         cursor.execute('''
             SELECT id
-            FROM path_enum
-            WHERE path = (SELECT MIN(path) FROM path_enum)                  
+            FROM tank
+            WHERE path = (SELECT MIN(path) FROM tank)                  
                         ''')
 
         result = cursor.fetchall()
