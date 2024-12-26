@@ -13,3 +13,10 @@ def IfList(id):
     result = cursor.fetchall()
     cursor.close()
     return (result == [])
+
+def GetMax():
+    cursor = conn.cursor()
+    cursor.execute('SELECT max(id) FROM tanks')
+    result = cursor.fetchall()
+    cursor.close()
+    return (result)

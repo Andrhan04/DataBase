@@ -10,8 +10,8 @@ steps = [
     step('''
     CREATE TABLE tank(
          id SERIAL PRIMARY KEY,
-         name VARCHAR(255) UNIQUE CHECK(TRIM(name) = name AND LENGTH(name) != 0),
-         path VARCHAR(255) UNIQUE CHECK(TRIM(path)) = path AND LENGTH(path) != 0) NOT NULL
+         name VARCHAR(255) CHECK(TRIM(name) = name AND LENGTH(name) != 0),
+         path VARCHAR(255) UNIQUE CHECK( (LENGTH(path) != 0) ) NOT NULL
          )
          '''),
     step('TRUNCATE tank'),   
@@ -49,7 +49,7 @@ steps = [
                     (47, 'G.W. Tiger P.', '1/2/5/11/22/47/'),
                 (23, 'PZ', '1/2/5/11/23/'),
                         (48, 'PZ.St.IVb', '1/2/5/11/23/48/'),
-                        (49, 'G.PZ.Mk VI', '1/2/5/11/23/49/');
+                        (49, 'G.PZ.Mk VI', '1/2/5/11/23/49/'),
             (3, 'Танк', '1/3/'),
                 (6, 'Средний', '1/3/6/'),
                     (12, 'Т-34', '1/3/6/12/'),
@@ -66,10 +66,10 @@ steps = [
                         (31, 'Кв-2', '1/3/7/14/31/'),
                     (15, 'ИС', '1/3/7/15/'),
                         (32, 'ИС-1', '1/3/7/15/32/'),
-                        (33, 'ИС-3', '1/3/7/15/33/'),
+                        (33, 'ИС-3', '1/3/7/15/33/');
             
          '''),
     step('''
-        ALTER SEQUENCE tank_id_seq RESTART WITH 50;
+        SELECT setval('tank_id_seq', (SELECT max(id)+1 FROM tank));
          '''),
 ]
