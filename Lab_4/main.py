@@ -24,26 +24,31 @@ def get_action_number():
             print("Вы ввели не число. Повторите ввод.")
 
 
-from Base import Connect
-conn = Connect.get_connection()
+from Base import connect as Connect
+conn = Connect.conn
 
 while(True):
     number_of_acion = get_action_number()
     if(number_of_acion == 0): # Выход
         conn.close()
+        os.system('cls')
         break
 
     elif(number_of_acion == 1): # Добавить лист
         print(query.AddLeaf(conn))
+        os.system('cls')
 
     elif(number_of_acion == 2): # Удалить лист
         print(query.DeleteLeaf(conn))
+        os.system('cls')
 
-    elif(number_of_acion == 3): # Удалить поддерево                 
+    elif(number_of_acion == 3): # Удалить поддерево          
         print(query.DeleteSubtree(conn))
+        os.system('cls')       
 
     elif(number_of_acion == 4): # Удалить узел без поддерева 
         print(query.DeleteNode(conn))
+        os.system('cls')
         
     elif(number_of_acion == 5): # Получить прямых потомков
         result = query.GetDirectDescendants(conn)
@@ -63,5 +68,6 @@ while(True):
         query.PrintBeautifully(result)
         
     elif(number_of_acion == 9): # Получить все дерево
+        os.system('cls')
         result = query.GetAll(conn=conn)
         query.PrintBeautifully(result)
