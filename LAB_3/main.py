@@ -12,12 +12,13 @@ def get_valid_int(prompt):
         user_input = input(prompt).strip()
         if user_input.isdigit():
             num = int(user_input)
-            if num > 0:
+            if num >= 0:
                 return num
         print("Пожалуйста, введите корректное положительное целое число.")
 
 tree = TankTree()
 while True:
+        print("0. Вывод всего дерева")
         print("1. Добавить лист")
         print("2. Удалить лист по ID")
         print("3. Удалить поддерево по ID родителя")
@@ -30,6 +31,15 @@ while True:
 
         choice = get_valid_int("Выберите действие: ")
         os.system('cls')
+        if choice == 0:
+            node_id = 1
+            descendants = tree.get_all_descendants(node_id)
+            result = tree.get_element(node_id)
+            print (f"Исходный узел: {result}")
+            print("Все потомки:")
+            for descendant, level in descendants:
+                print(f"'{descendant[0]}'" + " " * (
+                            level * 4) + f"'{descendant[2]}'")
         if choice == 1:
             parent_id = get_valid_int("Введите ID родителя: ")
             if(ExistForId(parent_id)):
@@ -81,8 +91,8 @@ while True:
             result = tree.get_element(node_id)
             print(f"Исходный узел: {result}")
             print("Все предки:")
-            for ancestor, level in reversed(ancestors):
-                print(f"'{ancestor[0]}'" + " " * (abs(level - 4) * 4) + f"'{ancestor[2]}'")
+            for ancestor, level in ancestors:
+                print(f"'{ancestor[0]}'" + " " * (abs(level) * 4) + f"'{ancestor[2]}'")
 
         elif choice == 9:
             break
