@@ -159,11 +159,11 @@ steps = [
     step("""
         DROP FUNCTION IF EXISTS get_all();
         CREATE OR REPLACE FUNCTION get_all()
-        RETURNS TABLE(id INT, name TEXT, place TEXT) AS $$
+        RETURNS TABLE(id INT, name TEXT) AS $$
         BEGIN
             RETURN QUERY
-                SELECT book_depository.id, book_depository.name, book_depository.place
-                FROM book_depository  ORDER BY id;
+                SELECT author.id, author.fio
+                FROM author  ORDER BY id;
         END;
         $$ LANGUAGE plpgsql;
     """),
@@ -171,7 +171,7 @@ steps = [
      step("""
         DROP FUNCTION IF EXISTS get(TEXT);
         CREATE OR REPLACE FUNCTION get(IN cur_user_id TEXT)
-        RETURNS TABLE(id INT, name TEXT, place TEXT) AS $$
+        RETURNS TABLE(id INT, fio TEXT) AS $$
         DECLARE
             cur_id INT;
         BEGIN
@@ -179,14 +179,12 @@ steps = [
             IF LENGTH(cur_user_id) = 0 OR NOT cur_user_id ~ '^[0-9]+$' OR (cur_user_id = '0') THEN
                 RAISE EXCEPTION 'The identifier must be a positive integer and cannot be empty';
             END IF;
-            
             cur_id := CAST(cur_user_id AS INT);
-            
-            IF NOT EXISTS (SELECT 1 FROM book_depository WHERE book_depository.id = cur_id) THEN
-                RAISE EXCEPTION 'Book depository with ID % not found', cur_id;
+            IF NOT EXISTS (SELECT 1 FROM author WHERE author.id = cur_id) THEN
+                RAISE EXCEPTION 'Author with ID % not found', cur_id;
             END IF;
             
-            RETURN QUERY SELECT book_depository.id, book_depository.name, book_depository.place  FROM book_depository WHERE book_depository.id = cur_id;
+            RETURN QUERY SELECT author.id, author.fio  FROM author WHERE author.id = cur_id;
         END;
         $$ LANGUAGE plpgsql;
     """),
@@ -206,14 +204,14 @@ steps = [
                     CONTINUE; 
                 END IF;
                 cur_id := id::INT;
-                IF EXISTS (SELECT 1 FROM book_depository WHERE book_depository.id = cur_id) THEN
-                    DELETE FROM book_depository WHERE book_depository.id = cur_id;
+                IF EXISTS (SELECT 1 FROM author WHERE author.id = cur_id) THEN
+                    DELETE FROM author WHERE author.id = cur_id;
                     deleted_count := deleted_count + 1;  
                 ELSE
-                    RAISE NOTICE 'The user with ID % was not found.', cur_id;
+                    RAISE NOTICE 'The author with ID % was not found.', cur_id;
                 END IF;
             END LOOP;
-            RAISE NOTICE 'Removed Book depositorys: %', deleted_count;
+            RAISE NOTICE 'Removed Author: %', deleted_count;
             RETURN deleted_count;  
         END;
         $$ LANGUAGE plpgsql;
@@ -228,47 +226,39 @@ steps = [
         BEGIN
             cur_id := NULLIF(TRIM(cur_user_id), '');
             IF cur_id IS NULL OR NOT (cur_user_id ~ '^[0-9]+$') OR (cur_user_id = '0') THEN
-                RAISE EXCEPTION 'The book_depository id must be a positive integer and cannot be empty';
+                RAISE EXCEPTION 'The author id must be a positive integer and cannot be empty';
             END IF;
             cur_id := CAST(cur_id AS INT);
 
-            IF NOT EXISTS (SELECT 1 FROM book_depository WHERE id = cur_id) THEN
-                RAISE EXCEPTION 'Book depository with ID % not found', cur_id;
+            IF NOT EXISTS (SELECT 1 FROM author WHERE id = cur_id) THEN
+                RAISE EXCEPTION 'Author with ID % not found', cur_id;
             END IF;
-            DELETE FROM book_depository WHERE id = cur_id;
+            DELETE FROM author WHERE id = cur_id;
         END;
         $$;
     '''),
 
     step('''
-    DROP PROCEDURE IF EXISTS update(TEXT,TEXT,TEXT);
+    DROP PROCEDURE IF EXISTS update(TEXT,TEXT);
     CREATE OR REPLACE PROCEDURE update (
         IN cur_id TEXT, 
-        IN cur_name TEXT,
-        IN cur_place TEXT
+        IN cur_name TEXT
     )
     LANGUAGE plpgsql AS $$
     BEGIN
-        cur_name := TRIM(regexp_replace(cur_name, '\s+', ' ', 'g'));
-        cur_place := TRIM(regexp_replace(cur_place, '\s+', ' ', 'g'));
         IF LENGTH(cur_id) = 0 OR NOT cur_id ~ '^[0-9]+$' THEN
-            RAISE EXCEPTION 'The Book depository id must be a positive integer and cannot be empty ';
+            RAISE EXCEPTION 'The author id must be a positive integer and cannot be empty ';
         END IF;
         DECLARE
             cur_id INT := CAST(cur_id AS INT);
         BEGIN
-            IF NOT EXISTS (SELECT 1 FROM book_depository WHERE book_depository.id = cur_id) THEN
-                RAISE EXCEPTION 'Book depository with ID % not found', cur_id;
+            IF NOT EXISTS (SELECT 1 FROM author WHERE author.id = cur_id) THEN
+                RAISE EXCEPTION 'author with ID % not found', cur_id;
             END IF;
             IF cur_name IS NOT NULL AND cur_name <> '' THEN                
-                UPDATE book_depository 
-                SET name = cur_name
-                WHERE book_depository.id = cur_id;
-            END IF;
-            IF cur_place IS NOT NULL AND cur_place <> '' THEN
-                UPDATE book_depository 
-                SET place = cur_place
-                WHERE id = cur_id;
+                UPDATE author 
+                SET fio = cur_name
+                WHERE author.id = cur_id;
             END IF;
         END;
     END;
@@ -277,27 +267,52 @@ steps = [
 
 
     step('''
-    DROP PROCEDURE IF EXISTS add(TEXT, TEXT);
+    DROP PROCEDURE IF EXISTS add(TEXT);
     CREATE OR REPLACE PROCEDURE add(
-        IN cur_name TEXT,
-        IN cur_place TEXT
+        IN cur_name TEXT
     )
     LANGUAGE plpgsql AS $$
     BEGIN
-        cur_name := TRIM(regexp_replace(cur_name, '\s+', ' ', 'g'));
-        cur_place := TRIM(regexp_replace(cur_place, '\s+', ' ', 'g'));
-         
         IF LENGTH(cur_name) = 0 THEN
             RAISE EXCEPTION 'Name cannot be empty or consist only of spaces';
         END IF;
-        
-        IF LENGTH(cur_place) = 0 THEN
-            RAISE EXCEPTION 'Palace cannot be empty or consist only of spaces';
-        END IF; 
-         
-        INSERT INTO book_depository (name, place) 
-        VALUES (cur_name, cur_place);
+        INSERT INTO author (fio) 
+        VALUES (cur_name);
     END;
     $$;
-         ''')
+         '''),
+    
+#-----------------------------------------------------------------------------------------
+    step(
+        '''
+            DROP TRIGGER IF EXISTS name_trigger ON Author;
+        '''
+    ),
+
+    step(
+        '''
+            DROP FUNCTION IF EXISTS name_validate();
+        '''
+   ),
+    step(
+        '''
+            CREATE OR REPLACE FUNCTION name_validate()
+            RETURNS trigger
+            LANGUAGE plpgsql
+            AS $$
+            BEGIN
+                NEW.fio = regexp_replace(NEW.fio,'[^A-Za-z -]','','g');
+                NEW.fio = INITCAP(TRIM(regexp_replace(NEW.fio, '\s+', ' ', 'g')));
+                RETURN NEW;
+            END;
+            $$;
+        '''
+    ),
+    step(
+        '''
+            CREATE TRIGGER name_trigger
+            BEFORE INSERT OR UPDATE ON Author
+            FOR EACH ROW EXECUTE FUNCTION name_validate();
+        '''
+    )
 ]

@@ -2,12 +2,14 @@ import hashlib
 
 def Add(conn):
     name = input("Введите название: ")    
-    place = input("Введите место расположение: ")
     try:
         cursor = conn.cursor()
-        cursor.execute("CALL add(%s, %s)", (name, place))
+        print(name)
+        #cursor.execute("CALL add('%s')", str(name))
+        s = "CALL add('" + name + "')"
+        cursor.execute(s)
         conn.commit()
-        print("Книгохранилище успешно добавлено.")
+        print("Автор успешно добавлено.")
     except Exception as e:
         conn.rollback()
         print(e)
@@ -18,7 +20,7 @@ def GetAll(conn):
     rows = cursor.fetchall()
 
     for row in rows:
-        print(f"{row[0]:3} {row[1]:35} {row[2]}")
+        print(f"{row[0]:3} {row[1]:35}")
 
 
 def Get(conn):
@@ -30,9 +32,8 @@ def Get(conn):
         if result:
             print("{:<20} {}".format("id:", result[0]))
             print("{:<20} {}".format("Название:", result[1]))
-            print("{:<20} {}".format("Место:", result[2]))
         else:
-            print(f"Book depository with ID {id} not found.")
+            print(f"Author with ID {id} not found.")
     except Exception as e:
         conn.rollback()
         print(e)
@@ -40,15 +41,14 @@ def Get(conn):
 def Update(conn):
     id = input("Введите ID: ")    
     name = input("Введите название: ")
-    place = input("Введите место: ")
     
         
     try:
         cursor = conn.cursor()
-        cursor.execute("CALL update(%s, %s, %s)",
-                        (id, name, place))
+        cursor.execute("CALL update(%s, %s)",
+                        (id, name))
         conn.commit()
-        print("Книгохранилище успешно обновлено.")
+        print("Автор успешно обновлено.")
     except Exception as e:
         conn.rollback()
         print(e)
@@ -59,13 +59,13 @@ def Delete(conn):
         cursor = conn.cursor()
         cursor.execute("CALL delete(%s)", (id,))
         conn.commit()
-        print("Книгохранилище успешно удалено.")
+        print("Автор успешно удалено.")
     except Exception as e:
         conn.rollback()
         print(f"Произошла ошибка: {e}")
 
 def DeleteMany(conn):
-    ids_input = input("Введите id книгохранилищ через пробел: ")    
+    ids_input = input("Введите id авторов через пробел: ")    
 
     ids = ids_input.split()
     try:
@@ -73,7 +73,7 @@ def DeleteMany(conn):
         cursor.execute("SELECT delete_many(%s)", (ids,))
         deleted_count = cursor.fetchone()[0]
         conn.commit()
-        print(f"Удалено книгохранилищ: {deleted_count}")
+        print(f"Удалено авторов: {deleted_count}")
     except Exception as e:
         conn.rollback()
         print(e)
