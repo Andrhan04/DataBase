@@ -143,17 +143,16 @@ def DeleteLeaf(conn):
 
         cursor = conn.cursor()        
         cursor.execute('''
-            DELETE FROM tnk
+            DELETE FROM tank
             WHERE id = %s        
                     ''', (id,))
-        
         result = cursor.rowcount
         conn.commit()
         cursor.close()
 
         if(result == 0):
             return("Нет листа с таким идентификатором")
-
+        
         return "Успешно удалили лист"
     except:
         conn.rollback()

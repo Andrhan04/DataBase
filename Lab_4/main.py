@@ -36,19 +36,19 @@ while(True):
 
     elif(number_of_acion == 1): # Добавить лист
         print(query.AddLeaf(conn))
-        os.system('cls')
+        
 
     elif(number_of_acion == 2): # Удалить лист
         print(query.DeleteLeaf(conn))
-        os.system('cls')
+        
 
     elif(number_of_acion == 3): # Удалить поддерево          
         print(query.DeleteSubtree(conn))
-        os.system('cls')       
+             
 
     elif(number_of_acion == 4): # Удалить узел без поддерева 
         print(query.DeleteNode(conn))
-        os.system('cls')
+        
         
     elif(number_of_acion == 5): # Получить прямых потомков
         result = query.GetDirectDescendants(conn)
