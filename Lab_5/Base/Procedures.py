@@ -1,7 +1,7 @@
 import hashlib
 
 def Add(conn):
-    name = input("Введите название: ")    
+    name = input("Введите ФИО: ")    
     try:
         cursor = conn.cursor()
         print(name)
@@ -40,7 +40,7 @@ def Get(conn):
 
 def Update(conn):
     id = input("Введите ID: ")    
-    name = input("Введите название: ")
+    name = input("Введите ФИО: ")
     
         
     try:

@@ -9,7 +9,7 @@ __depends__ = {}
 steps = [
     step("""
     CREATE TABLE Book (id SERIAL PRIMARY KEY, name TEXT NOT NULL CHECK (TRIM(name) = '' IS NOT TRUE), Description TEXT NOT NULL);
-    CREATE TABLE author (id SERIAL PRIMARY KEY, fio TEXT NOT NULL CHECK (TRIM(fio) = '' IS NOT TRUE));
+    CREATE TABLE author (id SERIAL PRIMARY KEY, fio TEXT NOT NULL CHECK (TRIM(fio) = '' IS NOT TRUE) UNIQUE);
     CREATE TABLE book_depository (id SERIAL PRIMARY KEY, name TEXT NOT NULL CHECK (TRIM(name) = '' IS NOT TRUE), place TEXT NOT NULL CHECK (TRIM(place) = '' IS NOT TRUE));
     CREATE TABLE Instances (id SERIAL PRIMARY KEY, book_id INT REFERENCES book(id) ON DELETE CASCADE, place_id INT REFERENCES book_depository(id) ON DELETE CASCADE);
     CREATE TABLE book_author (book_id INT REFERENCES book(id) ON DELETE CASCADE, author_id INT REFERENCES author(id) ON DELETE CASCADE);
@@ -301,7 +301,26 @@ steps = [
             LANGUAGE plpgsql
             AS $$
             BEGIN
-                NEW.fio = regexp_replace(NEW.fio,'[^A-Za-z -]','','g');
+                NEW.fio = replace(NEW.fio, '\', '');
+                NEW.fio = replace(NEW.fio, '!', '');
+                NEW.fio = replace(NEW.fio, '@', '');
+                NEW.fio = replace(NEW.fio, '#', '');
+                NEW.fio = replace(NEW.fio, '$', '');
+                NEW.fio = replace(NEW.fio, '^', '');
+                NEW.fio = replace(NEW.fio, ':', '');
+                NEW.fio = replace(NEW.fio, '.', '');
+                NEW.fio = replace(NEW.fio, ',', '');
+                NEW.fio = replace(NEW.fio, '/', '');
+                NEW.fio = replace(NEW.fio, '&', '');
+                NEW.fio = replace(NEW.fio, '*', '');
+                NEW.fio = replace(NEW.fio, '(', '');
+                NEW.fio = replace(NEW.fio, ')', '');
+                NEW.fio = replace(NEW.fio, '[', '');
+                NEW.fio = replace(NEW.fio, ']', '');
+                NEW.fio = replace(NEW.fio, '{', '');
+                NEW.fio = replace(NEW.fio, '}', '');
+
+                NEW.fio = regexp_replace(NEW.fio,'[^A-Za-zа-яА-ЯёЁ]+$]','','g');
                 NEW.fio = INITCAP(TRIM(regexp_replace(NEW.fio, '\s+', ' ', 'g')));
                 RETURN NEW;
             END;
