@@ -10,8 +10,8 @@ class Book_depository:
         self.conn = conn
         self.cursor = self.conn.cursor()
     def add(self):
-        name = input("Введите название книги ").strip()
-        place = input("Введите описание ").strip()
+        name = input("Введите название ").strip()
+        place = input("Введите расположение ").strip()
         while name.find('  ') != -1:
             name = name.replace('  ', ' ')
         while place.find('  ') != -1:
@@ -41,8 +41,18 @@ class Book_depository:
         return res
 
     def update(self, id):
-        name = input("Введите название книги ")
-        place = input("Введите описание ")
+        name = input("Введите название ")
+        place = input("Введите расположение ")
+        while name.find('  ') != -1:
+            name = name.replace('  ', ' ')
+        while place.find('  ') != -1:
+            place = place.replace('  ', ' ')
+        if(name == ""):
+            print("Название не может быть пустым")
+            return
+        if(place == ""):
+            print("Описание не может быть пустым")
+            return
         cursor = conn.cursor()
         try:
             cursor.execute('UPDATE book_depository SET name = TRIM(%s), place = TRIM(%s) WHERE id = %s ',(name,place,str(id)))
